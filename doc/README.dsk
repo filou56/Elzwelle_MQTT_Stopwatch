@@ -1,0 +1,99 @@
+NEUE ZEITMESSUNG
+================
+
+Die neuen Pythonskripte benutzen jetzt INI Dateien für die 
+Konfiguration der wichtigsten Parameter, für die verschiedenen
+Plattformen !
+
+Auf dem Pi hat sie den Namen „linux.ini“
+
+....
+[serial]
+port = /dev/ttyAMA0
+baud = 57600
+
+[http]
+enabled = yes
+
+[google]
+spreadsheet_id = 1M05W0igR6stS4UBPfbe7-MFx0qoe5w6ktWAcLVCDZTE
+client_secret_json = client_secret.json
+....
+
+Am wichtigsten sind die beiden Einträge zu „google“ die entsprechend 
+anzupassen sind!
+
+----------------------- Testen ---------------------
+
+Tabelle: https://docs.google.com/spreadsheets/d/1M05W0igR6stS4UBPfbe7-MFx0qoe5w6ktWAcLVCDZTE
+
+spreadsheet_id = 1M05W0igR6stS4UBPfbe7-MFx0qoe5w6ktWAcLVCDZTE
+client_secret_json = client_secret.json
+
+Zum bearbeiten der Tabelle "timestamp" bei Google anmelden: 
+filouwelle / El$welle 
+
+----------------------- Rennen ---------------------
+
+Tabelle: https://docs.google.com/spreadsheets/d/1obtfHymwPSGoGoROUialryeGiMJ1vkEUWL_Gze_hyfk
+
+spreadsheet_id = 1obtfHymwPSGoGoROUialryeGiMJ1vkEUWL_Gze_hyfk
+client_secret_json = credentials.json
+
+----------------------------------------------------------------------------------------------
+
+Starten mit Skript über Desktop Starter
+=======================================
+
+Neu Messung mit Mikrocontroller und RTC:    Stoppuhr 2024
+
+Alte Messung mit Pi GPIO:                   Stoppuhr 2023
+
+----------------------------------------------------------------------------------------------
+
+Datum + Zeit setzen
+sudo date -s "JJJJ/MM/DD HH:MM"
+oder
+sudo ntpdate -b time.google.com
+
+Zeitmessung starten
+sudo python3 Elz_2021_12_a.py  Rennen 2022
+(sudo python3 Elz_Py3_2020_02_b.py alt von Olaf)
+
+------------------------------------------------------------------------
+
+Wenn das Netzwerk nicht mehr funktioniert:
+==========================================
+
+Mit dem Netwerkmanager (3.Icon von rechts) die Verbindungen 
+trennen, einige Sekunden warten und erneut verbinden.
+
+Alternativ gibt es auf der Konsole folgende nützliche Befehle:
+
+Zeige alle aktiven TCP Verbindungen:
+netstat -t
+
+Status aller Netzwerk Interfaces:
+ip link
+
+Info übers Netzwerk:
+ifconfig 
+.........
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.9.197  netmask 255.255.255.0  broadcast 192.168.9.255
+        inet6 fe80::3939:8f18:5841:8d52  prefixlen 64  scopeid 0x20<link>
+        ether b8:27:eb:45:00:8d  txqueuelen 1000  (Ethernet)
+        RX packets 23  bytes 10176 (9.9 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 22  bytes 3003 (2.9 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions
+.........
+
+Ethernet herunterfahren:
+sudo ifconfig eth0 down
+
+Ethernet Neustart mit DHCP:
+sudo ifconfig eth0 0.0.0.0 0.0.0.0 && dhclient
+
+
+
