@@ -1,0 +1,15 @@
+Eclipse Git Login
+--------------------------------------
+
+Secure storage was unable to save the master password
+=====================================================
+
+Go to Window > Preferences > Secure storage and uncheck "Linux Integration (64 bit)", 
+leaving "UI Prompt" as the only checked option. Likely Eclipse was trying to integrate 
+with some native password provider, and the integration is bogged. TODO: understand 
+precisely why.
+
+Now, the next time I try to create the connection with password, a popup appears 
+asking me to set a "Master password". I do that, and everything works.
+
+------------------------------------
