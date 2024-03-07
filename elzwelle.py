@@ -529,6 +529,7 @@ if __name__ == '__main__':
         try:
             thread = threading.Thread(target=httpd.serve_forever)
             thread.start()
+            print(time.asctime(), "Server is running")
         except KeyboardInterrupt:
             pass
         #print("It works! Version für Py3.7  Elz_2021_12_a.py  neu")
