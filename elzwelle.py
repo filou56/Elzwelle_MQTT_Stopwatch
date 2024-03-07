@@ -27,7 +27,9 @@ import googlesheet
 import gc
 import uuid
 import paho.mqtt.client as paho
-from paho import mqtt
+
+from   paho import mqtt
+from   pathlib import Path
 
 # import linecache
 # import tracemalloc
@@ -405,7 +407,7 @@ def on_publish(client, userdata, mid, properties=None):
         :param mid: variable returned from the corresponding publish() call, to allow outgoing messages to be tracked
         :param properties: can be used in MQTTv5, but is optional
     """
-    print("mid: " + str(mid))
+    print("Publish: mid: " + str(mid))
 
 
 # print which topic was subscribed to
@@ -478,6 +480,10 @@ if __name__ == '__main__':
 
     try:
         googlesheet.client_secret_file = config.get('google', 'client_secret_json')
+        if googlesheet.client_secret_file.startswith(".elzwelle"):
+            home_dir = Path.home()
+            print( f'Path: { home_dir } !' )
+            googlesheet.client_secret_file = os.path.join(home_dir,googlesheet.client_secret_file)
         print("Setup GOOGLE: ",googlesheet.client_secret_file)
     except:
         print("Setup GOOGLE with defaults ")
