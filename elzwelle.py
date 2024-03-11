@@ -595,17 +595,17 @@ if __name__ == '__main__':
     #-------------------------------End GPIO --------------------------------------------
     
     if config.getboolean('mqtt', 'enabled'):
-        # using MQTT version 5 here, for 3.1.1: MQTTv311, 3.1: MQTTv31
-        # userdata is user defined data of any type, updated by user_data_set()
-        # client_id is the given name of the client
         mqtt_client = paho.Client(client_id="elzwelle_"+str(uuid.uuid4()), userdata=None, protocol=paho.MQTTv311)
     
         # enable TLS for secure connection
-        mqtt_client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
+        if config.getboolean('mqtt','tls_enabled'):
+            mqtt_client.tls_set(tls_version=mqtt.client.ssl.PROTOCOL_TLS)
         # set username and password
-        mqtt_client.username_pw_set("welle", "elzwelle")
+        if config.getboolean('mqtt','auth_enabled'):
+            mqtt_client.username_pw_set(config.get('mqtt','user'),
+                                    config.get('mqtt','password'))
         # connect to HiveMQ Cloud on port 8883 (default for MQTT)
-        mqtt_client.connect("144db7091e4a45cbb0e14506aeed779a.s2.eu.hivemq.cloud", 8883)
+        mqtt_client.connect(config.get('mqtt','url'), config.getint('mqtt','port'))
        
         # setting callbacks, use separate functions like above for better visibility
         mqtt_client.on_connect      = on_connect
