@@ -627,7 +627,7 @@ if __name__ == '__main__':
         
     # setup and start GUI
     app = simpleapp_tk(None)
-    app.title("Tabelle Elz-Zeit")
+    app.title("MQTT Stoppuhr Elz-Zeit")
     app.refresh()
     app.mainloop()
     print(time.asctime(), "GUI done")
